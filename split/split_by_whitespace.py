@@ -2,6 +2,15 @@ import cv2
 import numpy as np
 from utils.image_to_array import image_to_array
 
+# 공백 기준 섹션 분할 함수
+# TODO:
+# 현재는 밝은 영역을 공백으로 판단
+# 검은색이더라도 충분히 넓은 영역은 공백으로 판단할 수 있도록 개선 필요
+# 현재 row에서 min_gap_height 이상 공백이 있으면 섹션으로 분할
+# empty_threshold: 공백으로 판단할 밝기 차이 임계값
+# min_gap_height: 최소 공백 높이
+# 이 값보다 작은 공백은 섹션으로 분할하지 않음
+
 def split_by_whitespace(image, empty_threshold=8, min_gap_height=150):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     h, w = gray.shape

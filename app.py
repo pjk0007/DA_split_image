@@ -20,8 +20,8 @@ def visualize_labels(labels, highlight_labels):
 
 if __name__ == "__main__":
     # 이미지 경로를 지정하세요
-    # image_path = '뉴셀_블랙마카.jpg'
-    image_path = '상페-딱딱이복숭아.png'
+    image_path = '뉴셀_블랙마카.jpg'
+    # image_path = '상페-딱딱이복숭아.png'
     image = image_to_array(image_path)
     
     # 시도 목록
@@ -37,11 +37,19 @@ if __name__ == "__main__":
     # sections, boundaries = split_by_edges(image, connectivity=4)
     # show_all_sections(sections)
 
-    # 2 -> 3. 공백 기준 분할 후 배경 기준 분할
+    # 3 -> 2 -> 3. 공백 기준 분할 후 배경 기준 분할
     total_sections = []
-    sections, boundaries = split_by_whitespace(image, empty_threshold=1, min_gap_height=160)
+    first_sections = []
+    sections, sec_boundaries = split_by_edges(image, connectivity=8)
+
     for sec in sections:
-        sec_sections, sec_boundaries = split_by_edges(sec, connectivity=4)
+        sec_sections, _ = split_by_whitespace(sec, empty_threshold=1, min_gap_height=160)
+        first_sections.extend(sec_sections)
+
+    show_all_sections(first_sections)
+
+    for sec in first_sections:
+        sec_sections, _ = split_by_edges(sec, connectivity=4)
         total_sections.extend(sec_sections)
     show_all_sections(total_sections)
     

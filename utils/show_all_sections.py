@@ -10,7 +10,7 @@ def show_all_sections(sections, columns=4, figsize=(12, 16)):
         cv2.imwrite(f'out/section_{i}.png', sec)  # 각 섹션을 파일로 저장
         plt.subplot(rows, columns, i + 1)
         plt.imshow(sec)
-        plt.axis('off')
+        # plt.axis('off')
         plt.title(f"Section {i}")
 
     plt.tight_layout()
